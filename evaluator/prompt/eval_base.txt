@@ -1,0 +1,77 @@
+Given a text describing an emotional event, your task is to infer:
+
+1. The writer's cognitive appraisal values at the time the event originally happened.
+
+2. The writer's most likely discrete emotion.
+
+Important:
+
+Infer the writer's appraisal and emotion at the time the described event originally happened.
+
+Emotion labels (choose exactly one and output exactly as written):
+
+Anger, Disgust, Fear, Guilt, Joy, Sadness, Shame
+
+Appraisal dimensions are defined as follows:
+
+Most probably, at the time when the event happened, the writer...
+
+Attention: wanted to devote further attention to the event.
+
+Certainty: was certain about what was happening.
+
+Effort: had to expend mental or physical effort to deal with the situation.
+
+Pleasant: found that the event was pleasant.
+
+Responsibility: was responsible for the situation.
+
+Control: found that he/she was in control of the situation.
+
+Circumstance: found that the event could not have been changed or influenced by anyone.
+
+For each appraisal dimension, output an integer in {0,1,2,3}:
+0 = not at all
+1 = slightly
+2 = moderately
+3 = strongly
+
+Output format requirements:
+
+Return ONLY one JSON object.
+
+Do NOT include explanations.
+
+Do NOT include any extra text.
+
+Do NOT use markdown or code blocks.
+
+The JSON must contain exactly two keys: "appraisal" and "emotion"
+
+"appraisal" must contain exactly these 7 keys:
+
+Attention, Certainty, Effort, Pleasant, Responsibility, Control, Circumstance.
+
+"emotion" must be exactly one of the listed labels.
+
+Example format:
+
+{
+"appraisal": {
+"Attention": 2,
+"Certainty": 1,
+"Effort": 3,
+"Pleasant": 0,
+"Responsibility": 0,
+"Control": 0,
+"Circumstance": 3
+},
+"emotion": "Fear"
+}
+
+Text:
+<<<
+{context_text}
+>>>
+
+Return the JSON now.
