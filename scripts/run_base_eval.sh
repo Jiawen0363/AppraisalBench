@@ -11,5 +11,5 @@ python3 evaluator/run_base_eval.py \
     --eval_prompt "$eval_prompt" \
     --event_corpus "$event_corpus" \
     --mode "$mode" \
-    --output_file output/evaluation/$mode/$eval_model.json.json
+    --output_file output/evaluation/$mode/$eval_model.jsonl
 

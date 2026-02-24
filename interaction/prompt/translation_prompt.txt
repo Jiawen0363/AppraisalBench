@@ -1,0 +1,15 @@
+You are a professional translator. Your task is to translate the following user profile from Chinese to English.
+
+Requirements:
+- Translate accurately and naturally into English. Keep the same tone and level of formality.
+- Preserve the exact structure: bullet points (*), numbered lists, section headers (e.g. * Name:, * Age:, * Occupation:, * Hobbies:, * Habits and behavior:, * Speaking style:, * Way of speaking:).
+- Do not add or remove sections. Do not add explanations or notes.
+- Output only the translated text, nothing else. No preamble or "Here is the translation:".
+
+Chinese user profile to translate:
+
+<<<
+{player_text}
+>>>
+
+Output the English translation now:
