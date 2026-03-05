@@ -1,5 +1,4 @@
 from typing import List, Union
-import re
 from tenacity import RetryError
 import logging
 import uuid
@@ -95,47 +94,3 @@ class Player(Agent):
 
     def reset(self):
         self.backend.reset()
-
-
-class Moderator(Player):
-    """
-    A special type of player that moderates the conversation (usually used as a component of environment).
-    """
-
-    def __init__(self, role_desc: str, backend: Union[BackendConfig, IntelligenceBackend],
-                 terminal_condition: str, global_prompt: str = None, **kwargs):
-        name = "Moderator"
-        super().__init__(name=name, role_desc=role_desc, backend=backend, global_prompt=global_prompt, **kwargs)
-
-        self.terminal_condition = terminal_condition
-
-    def to_config(self) -> AgentConfig:
-        return AgentConfig(
-            name=self.name,
-            role_desc=self.role_desc,
-            backend=self.backend.to_config(),
-            terminal_condition=self.terminal_condition,
-            global_prompt=self.global_prompt,
-        )
-
-    def is_terminal(self, history: List[Message], *args, **kwargs) -> bool:
-        """
-        check whether the conversation is over
-        """
-        # If the last message is the signal, then the conversation is over
-        if history[-1].content == SIGNAL_END_OF_CONVERSATION:
-            return True
-
-        try:
-            request_msg = Message(agent_name=self.name, content=self.terminal_condition, turn=-1)
-            response = self.backend.query(agent_name=self.name, role_desc=self.role_desc, history_messages=history,
-                                          global_prompt=self.global_prompt, request_msg=request_msg, *args, **kwargs)
-        except RetryError as e:
-            logging.warning(f"Agent {self.name} failed to generate a response. "
-                            f"Error: {e.last_attempt.exception()}.")
-            return True
-
-        if re.match(r"yes|y|yea|yeah|yep|yup|sure|ok|okay|alright", response, re.IGNORECASE):
-            return True
-        else:
-            return False
