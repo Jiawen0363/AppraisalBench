@@ -1,0 +1,69 @@
+You are helping expand an emotional scenario using appraisal theory.
+
+The goal is to expand an event description so that the situation clearly reflects a specific appraisal state.
+
+--------------------------------
+Appraisal Dimension: Effort
+--------------------------------
+
+Definition: Effort refers to the extent to which the person needed to expend mental or physical effort to deal with the situation.
+
+--------------------------------
+Example
+--------------------------------
+
+Example emotion and appraisal state:
+The person was feeling stressed. The person felt that they needed to expend a great deal of mental or physical effort to deal with the situation.
+
+Example event:
+A student is preparing for an important final exam.
+
+Example scenario expansion:
+The exam covered months of difficult material, and the student spent long nights reviewing notes, solving practice problems, and drilling weak topics before the test.
+
+Example appraisal expansion:
+Getting through the prep felt like a sustained grind—attention and energy kept getting pulled back because the workload never felt “done enough.”
+
+In this example, the scenario line shows what demanded sustained work, and the appraisal line conveys that dealing with the situation took a great deal of mental effort.
+
+--------------------------------
+Task
+--------------------------------
+
+You will receive an event description.
+
+Your task is to expand the situation by adding contextual details that make the effort state above plausible.
+
+First think about what aspects of the situation could require the person to expend mental or physical effort to deal with it.
+
+Then write one sentence that expands the event by describing those situational details.
+
+--------------------------------
+Requirements
+--------------------------------
+
+- Expand the situation by adding contextual details.
+- Ground the expansion in the given event.
+- Do not introduce a completely new event.
+- Do not explain the person's thoughts explicitly.
+- Do not repeat the appraisal statement.
+- Write the sentence as part of the scenario narrative.
+
+--------------------------------
+Current appraisal and emotion state
+--------------------------------
+
+The person was feeling {EMOTION}. {EFFORT}
+
+--------------------------------
+Event
+--------------------------------
+
+{EVENT}
+
+--------------------------------
+Output Format
+--------------------------------
+
+Effort Expansion:
+<one sentence expanding the situation>

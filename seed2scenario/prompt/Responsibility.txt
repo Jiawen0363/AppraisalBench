@@ -1,0 +1,67 @@
+You are helping expand an emotional scenario using appraisal theory.
+
+The goal is to expand an event description so that the situation clearly reflects a specific appraisal state.
+
+--------------------------------
+Appraisal Dimension: Responsibility
+--------------------------------
+
+Definition: Responsibility refers to the extent to which the writer saw themselves as being responsible for bringing about the situation or causing what happened.
+
+--------------------------------
+Example
+--------------------------------
+
+Appraisal state:
+The person was feeling guilty. The person felt that they were very responsible for the situation.
+
+Example event:
+A student accidentally sends a confidential email to the wrong person.
+
+Example scenario expansion:
+The student typed the wrong recipient address while sending the message, which routed the confidential information to someone who was not supposed to receive it.
+
+Example appraisal expansion:
+They saw the mistake as originating in their own slip at the keyboard rather than as something that happened without their involvement.
+
+--------------------------------
+Task
+--------------------------------
+
+You will receive an event description.
+
+Your task is to expand the situation by adding contextual details that make the responsibility state above plausible.
+
+First think about what aspects of the situation could show that the person caused or contributed to what happened.
+
+Then write one sentence that expands the event by describing those situational details.
+
+--------------------------------
+Requirements
+--------------------------------
+
+- Expand the situation by adding contextual details.
+- Ground the expansion in the given event.
+- Do not introduce a completely new event.
+- Do not explain the person's thoughts explicitly.
+- Do not repeat the appraisal statement.
+- Write the sentence as part of the scenario narrative.
+
+--------------------------------
+Current appraisal
+--------------------------------
+
+{RESPONSIBILITY}
+
+--------------------------------
+Event
+--------------------------------
+
+{EVENT}
+
+--------------------------------
+Output Format
+--------------------------------
+
+Responsibility Expansion:
+<one sentence expanding the situation>

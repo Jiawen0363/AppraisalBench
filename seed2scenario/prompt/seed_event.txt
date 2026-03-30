@@ -1,0 +1,14 @@
+
+You are given an event in the Format
+
+I felt ... when ...
+
+Rewrite the sentence only preserving the event.
+
+Example:
+
+Input:
+I felt ... when I read that hunters had killed one of the world famous lions.
+
+Output:
+I read that hunters had killed one of the world famous lions.

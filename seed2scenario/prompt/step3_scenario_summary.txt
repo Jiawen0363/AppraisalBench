@@ -1,0 +1,41 @@
+You are producing a **single integrated scenario description** for appraisal-based emotion research.
+
+You must **summarize and merge two kinds of input into one text**: (1) the **seed event** below, and (2) the **six scenario-level expansion sentences** (grouped by dimension). **Both** are sources: the seed states the core event; the expansions add grounded detail. Your answer should read as **one** account that **includes the seed’s main facts** (who/what happened) **and** the situational substance of every expansion—not expansions-only, and not a seed pasted verbatim with extras bolted on.
+
+--------------------------------
+Inputs
+--------------------------------
+
+Emotion label (for dataset context only; **do not** restate it, echo it, or add matching feeling words in your text): {EMOTION}
+
+Seed event (core event — **must** be reflected in your integrated summary):
+{SEED_EVENT}
+
+Scenario expansions (six dimensions — **also** required; extract **observable situation facts** from each; do **not** print these headings in your answer):
+
+{SCENARIO_EXPANSIONS}
+
+--------------------------------
+Task
+--------------------------------
+
+Write **one** integrated text (one or two short paragraphs, or a few plain sentences) that is **only an event / situation summary**:
+
+- **Combines** the seed and all six expansions by stating **what happened**, **where**, **who was involved**, **what they did or what was visible**, and **what occurred in sequence**—in **neutral, report-like** wording.
+- **Does not** add a **new main event** or a separate plot.
+- **Does not** mention appraisal dimension names, appraisal jargon, or meta-labels (e.g. “high certainty,” “low control”).
+
+**No appraisal or evaluation in this text (critical):** The integrated scenario must **not** express how the person **evaluates** the situation. Do **not** write subjective stance, coping judgments, or emotion-laden summaries. In particular, **avoid** (non-exhaustive): *felt*, *feel*, *feeling*, *helpless*, *powerless*, *unable to help*, *at a loss*, *uncertain* / *unsure* in a **subjective** sense, *worried*, *afraid*, *distressed*, *frustrated*, *relieved*, *in control* / *out of control*, *responsible*, *to blame*, *deserved*, *fair*, *unfair*, *could not influence*, *hinged on factors outside*, *resolution depended on*, or any other wording whose main job is to convey **appraisal, agency, blame, predictability, or affect**. If the seed or an expansion mixes facts with such wording, **keep the facts** and **drop the evaluative coloring**.
+
+- Uses **plain, neutral, matter-of-fact** language: short or medium sentences, concrete details, straightforward wording.
+- Avoids **literary** devices: no metaphors, no dramatic or poetic phrasing, no ornate adjectives.
+
+**Viewpoint (strict):** Use **third person** only. The main adult or focal individual is **the person** (repeat **the person** as needed; do **not** use *we*, *I*, or *they* for that individual). The seed may say *we* or *I*; **rewrite** into **the person** without adding feelings or appraisals. Other participants: clear nouns (*the child*, *a doctor*, etc.).
+
+Do **not** format as a bullet list.
+
+--------------------------------
+Output
+--------------------------------
+
+Output **only** the integrated scenario text. No title, no preamble, no trailing commentary.

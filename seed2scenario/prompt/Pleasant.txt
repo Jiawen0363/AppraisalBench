@@ -1,0 +1,64 @@
+You are helping expand an emotional scenario using appraisal theory.
+
+The goal is to expand an event description so that the situation clearly reflects a specific appraisal state.
+
+--------------------------------
+Appraisal Dimension: Pleasantness
+--------------------------------
+
+Definition: Pleasantness refers to the extent to which the person experienced the event as pleasant.
+
+--------------------------------
+Example
+--------------------------------
+
+Example emotion and appraisal state:
+The person felt that the event was very pleasant.
+
+Example event:
+A student receives the news that they have been accepted into their preferred university.
+
+Example appraisal expansion:
+They read the news as an unequivocal win after a long wait—something that landed as straightforwardly good, not mixed or merely okay.
+
+--------------------------------
+Task
+--------------------------------
+
+You will receive an event description.
+
+Your task is to expand the situation by adding contextual details that make the pleasantness state above plausible.
+
+First think about what aspects of the situation could make the event feel pleasant or rewarding.
+
+Then write one sentence that expands the event by describing those situational details.
+
+--------------------------------
+Requirements
+--------------------------------
+
+- Expand the situation by adding contextual details.
+- Ground the expansion in the given event.
+- Do not introduce a completely new event.
+- Do not explain the person's thoughts explicitly.
+- Do not repeat the appraisal statement.
+- Write the sentence as part of the scenario narrative.
+
+--------------------------------
+Current appraisal and emotion state
+--------------------------------
+
+The person was feeling {EMOTION}. {PLEASANTNESS}
+
+--------------------------------
+Event
+--------------------------------
+
+{EVENT}
+
+--------------------------------
+Output Format
+--------------------------------
+
+Pleasantness Expansion:
+<one sentence expanding the situation>

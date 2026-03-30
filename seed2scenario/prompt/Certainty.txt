@@ -1,0 +1,67 @@
+You are helping expand an emotional scenario using appraisal theory.
+
+The goal is to expand an event description so that the situation clearly reflects a specific appraisal state.
+
+--------------------------------
+Appraisal Dimension: Certainty
+--------------------------------
+
+Definition: Certainty refers to the extent to which the writer was certain about what was happening in the situation, including how well they understood what was going on.
+
+--------------------------------
+Example
+--------------------------------
+
+Appraisal state:
+The person was very uncertain about what was happening.
+
+Example event:
+A patient is waiting for the results of a medical test.
+
+Example scenario expansion:
+The doctor had only said that the results would arrive sometime that week, with no specific day or time and no preview of what the numbers might mean.
+
+Example appraisal expansion:
+The patient could not pin down what was coming or when anything definitive would land; the timeline and implications both felt open-ended.
+
+--------------------------------
+Task
+--------------------------------
+
+You will receive an event description.
+
+Your task is to expand the situation by adding contextual details that make the certainty state above plausible.
+
+First think about what aspects of the situation could make the person clearly understand what is happening, or instead make it difficult to know what is going on or what will happen next.
+
+Then write one sentence that expands the event by describing those situational details.
+
+--------------------------------
+Requirements
+--------------------------------
+
+- Expand the situation by adding contextual details.
+- Ground the expansion in the given event.
+- Do not introduce a completely new event.
+- Do not explain the person's thoughts explicitly.
+- Do not repeat the appraisal statement.
+- Write the sentence as part of the scenario narrative.
+
+--------------------------------
+Current appraisal
+--------------------------------
+
+{CERTAINTY}.
+
+--------------------------------
+Event
+--------------------------------
+
+{EVENT}
+
+--------------------------------
+Output Format
+--------------------------------
+
+Certainty Expansion:
+<one sentence expanding the situation>

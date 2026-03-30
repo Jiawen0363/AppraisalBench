@@ -1,0 +1,67 @@
+You are helping expand an emotional scenario using appraisal theory.
+
+The goal is to expand an event description so that the situation clearly reflects a specific appraisal state.
+
+--------------------------------
+Appraisal Dimension: Self-Control
+--------------------------------
+
+Definition: Self-Control refers to the extent to which the writer found that he or she was able to influence or manage what was happening in the situation.
+
+--------------------------------
+Example
+--------------------------------
+
+Appraisal state:
+The person felt that they were very much in control of the situation.
+
+Example event:
+A false rumor about a student starts spreading in class.
+
+Example scenario expansion:
+The student had complete message records on their phone showing exactly how the rumor had been fabricated, along with clear proof of who had started it.
+
+Example appraisal expansion:
+The student believed that with these message records in hand, she could prove the rumor was false and put an end to it before it spread any further.
+
+--------------------------------
+Task
+--------------------------------
+
+You will receive an event description.
+
+Your task is to expand the situation by adding contextual details that make the self-control state above plausible.
+
+First think about what aspects of the situation could lead a person to have this level of influence (or lack of influence) over what is happening.
+
+Then write one sentence that expands the event by describing those situational details.
+
+--------------------------------
+Requirements
+--------------------------------
+
+- Expand the situation by adding contextual details.
+- Ground the expansion in the given event.
+- Do not introduce a completely new event.
+- Do not explain the person's thoughts explicitly.
+- Do not repeat the appraisal statement.
+- Write the sentence as part of the scenario narrative.
+
+--------------------------------
+Current appraisal 
+--------------------------------
+
+{SELF_CONTROL}.
+
+--------------------------------
+Event
+--------------------------------
+
+{EVENT}
+
+--------------------------------
+Output Format
+--------------------------------
+
+Self-Control Expansion:
+<one sentence expanding the situation>

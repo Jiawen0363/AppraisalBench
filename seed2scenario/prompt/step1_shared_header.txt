@@ -1,0 +1,69 @@
+You are helping expand an emotional scenario using appraisal theory. For the dimensions listed below, write expansions that are **clear, specific, and easy to tell apart**, so they can anchor the situation.
+
+--------------------------------
+Task
+--------------------------------
+
+You will receive one event and a list of appraisal dimensions (each with definition, worked example, and current appraisal state for this scenario).
+
+For **each dimension listed below**, follow the rules in the next section. Dimensions appear in a fixed order; your output must use the **exact output labels** specified there.
+
+**Two kinds of text (except for Pleasantness—see below):**
+
+1. **Scenario expansion** — One sentence that adds **grounded, concrete, situation-level** detail tied to the **same seed event**. It should make that dimension’s appraisal **plausible in the world of the story**: what was going on, what was visible or happening, without introducing a **new main event** or a new plot thread. Make these sentences **specific and distinctive** (strong situational anchors), not vague mood, not a paraphrase of the appraisal label, and not padding that pushes unrelated dimensions.
+
+2. **Appraisal expansion** — One sentence that **preserves the cognition / appraisal stance** for that dimension: how the person understands, attributes, expects, or evaluates the situation. You may use **cognition-level** wording (e.g. sense of predictability, sense of agency, who is to blame). Do **not** use meta-label phrases such as “high certainty,” “low control,” “low responsibility,” or dimension names as jargon.
+
+**Pleasantness (special case):** If **Pleasantness** appears in the list, output **only** an appraisal expansion for it. **Do not** output any scenario expansion line for Pleasantness. Pleasantness is kept as a **cognition / evaluation signal** only, not as extra scenario-level valence detail, so other dimensions stay diagnostically clear.
+
+All sentences must refer to the **same event** as the given seed and must **not contradict** each other.
+
+--------------------------------
+Requirements
+--------------------------------
+
+- Ground content in the given event. Do not replace it with a different core event.
+- **Scenario expansion lines:** describe what the situation was like or what happened (observable or narratable circumstances). Avoid explicit meta-emotion framing (e.g. avoid “the person felt that…” as a crutch if you can show the situation instead).
+- **Appraisal expansion lines:** may describe understanding, interpretation, or evaluative stance; still avoid bare appraisal labels and the banned meta phrases above.
+- Do not let one dimension’s sentences **dominate or overwrite** the others’ intended meanings.
+
+**Viewpoint (strict):** Write in **third person** only. The individual whose appraisals you are expanding is always **the person**—use **the person** consistently whenever that same individual is the subject (do **not** rotate among *we*, *I*, *they*, or *one* for them). The seed event may use *we* or *I*; still phrase your sentences around **the person** without changing the facts. Other participants need clear nouns (*a doctor*, *the child*, *a classmate*, *an email*), not vague *they* when it could mean the person or someone else.
+
+--------------------------------
+Input
+--------------------------------
+
+Event: {EVENT}
+
+--------------------------------
+Appraisal dimensions
+--------------------------------
+
+Below: one block per dimension, in order. Each block gives that dimension’s name, definition, a worked example (appraisal state, event, sample expansions), and the **current appraisal state** for this scenario (for the same event as above).
+
+{DIMENSION_BLOCKS}
+
+--------------------------------
+Output format
+--------------------------------
+
+Use **only** the following label patterns. For each dimension **other than Pleasantness**, output **two** lines in this order:
+
+  {DimensionName}_scenario:
+  <one sentence>
+
+  {DimensionName}_appraisal:
+  <one sentence>
+
+Use the exact dimension display name from the list (e.g. Attention, Certainty, Effort, Responsibility, Self-Control, Circumstance).
+
+For **Pleasantness** only, output **one** line:
+
+  Pleasantness_appraisal:
+  <one sentence>
+
+Do not output Pleasantness_scenario:.
+
+Output dimensions **in the same order** as listed above. For each dimension, keep the pair (or single line for Pleasantness) together before moving to the next.
+
+Do not add any other text before or after.

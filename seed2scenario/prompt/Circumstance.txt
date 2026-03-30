@@ -1,0 +1,69 @@
+You are helping expand an emotional scenario using appraisal theory.
+
+The goal is to expand an event description so that the situation clearly reflects a specific appraisal state.
+
+--------------------------------
+Appraisal Dimension: Circumstance
+--------------------------------
+
+Definition: Circumstance refers to the extent to which the event could not have been changed or influenced by anyone.
+
+--------------------------------
+Example
+--------------------------------
+
+Example emotion and appraisal state:
+The person was feeling afraid. The person felt that the event could not have been changed or influenced by anyone.
+
+Example event:
+A family’s home is badly damaged during an earthquake.
+
+Example scenario expansion:
+The earthquake struck suddenly without warning and caused severe damage to the house within seconds.
+
+Example appraisal expansion:
+What happened felt like a force that arrived from outside anyone’s choices—nothing they could have steered or vetoed in the moment.
+
+In this example, the scenario line describes the uncontrollable external shock, and the appraisal line captures the sense that the event could not have been changed or influenced by anyone.
+
+--------------------------------
+Task
+--------------------------------
+
+You will receive an event description.
+
+Your task is to expand the situation by adding contextual details that make the circumstance state above plausible.
+
+First think about what aspects of the situation could make the event impossible for anyone to change or influence.
+
+Then write one sentence that expands the event by describing those situational details.
+
+--------------------------------
+Requirements
+--------------------------------
+
+- Expand the situation by adding contextual details.
+- Ground the expansion in the given event.
+- Do not introduce a completely new event.
+- Do not explain the person's thoughts explicitly.
+- Do not repeat the appraisal statement.
+- Write the sentence as part of the scenario narrative.
+
+--------------------------------
+Current appraisal and emotion state
+--------------------------------
+
+The person was feeling {EMOTION}. {CIRCUMSTANCE}
+
+--------------------------------
+Event
+--------------------------------
+
+{EVENT}
+
+--------------------------------
+Output Format
+--------------------------------
+
+Circumstance Expansion:
+<one sentence expanding the situation>

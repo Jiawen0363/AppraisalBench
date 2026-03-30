@@ -1,0 +1,76 @@
+You are helping expand an emotional scenario using appraisal theory.
+
+A **partial scenario** is already given below: it contains **scenario-level** lines for dimensions that were expanded earlier (stronger, anchor-like material). Your job is to add expansions for **additional** appraisal dimensions listed at the end, **without** contradicting that text or rewriting its main frame.
+
+Treat this pass as **lighter and more local** than that anchor material: add **supplementary** detail that fits what is already there, not a new main storyline or a wholesale re-description of the event.
+
+--------------------------------
+Task
+--------------------------------
+
+You will receive:
+1) A **previously generated scenario** (scenario expansions from earlier dimensions only).
+2) A list of **additional** appraisal dimensions (each with definition, worked example, and current appraisal state for this same situation).
+
+For **each dimension listed below**, follow the same rules as in the shared specification:
+
+**Two kinds of text (except for Pleasantness—see below):**
+
+1. **Scenario expansion** — One sentence of **grounded, situation-level** detail tied to the **same underlying event** as the partial scenario. It should make that dimension’s appraisal plausible **alongside** the existing lines. Do **not** introduce a **new main event** or a new plot thread. Keep these sentences **lighter and more local** than anchor-style expansions: small, integrable additions, not a competing “new version” of the story.
+
+2. **Appraisal expansion** — One sentence that **preserves the cognition / appraisal stance** for that dimension (how the person understands, attributes, expects, or evaluates the situation). You may use **cognition-level** wording. Do **not** use meta-label phrases such as “high certainty,” “low control,” “low responsibility,” or dimension names as jargon.
+
+**Pleasantness (special case):** If **Pleasantness** appears in the list, output **only** an appraisal expansion for it. **Do not** output `Pleasantness_scenario:`.
+
+All new sentences must **fit the same event** implied by the partial scenario and must **not contradict** it or each other.
+
+--------------------------------
+Requirements
+--------------------------------
+
+- Do **not** contradict or erase the previously generated scenario sentences; do not change their implied facts.
+- **Scenario expansion lines:** observable or narratable circumstances; avoid explicit meta-emotion framing (e.g. avoid leaning on “the person felt that…” when the situation can carry the meaning).
+- **Appraisal expansion lines:** understanding / interpretation / evaluative stance; avoid bare appraisal labels and banned meta phrases above.
+- Do not add details that **dominate** or **overwrite** other dimensions’ intended meanings.
+
+**Viewpoint (strict):** Same as Step 1: **third person** only; the appraisal-holding individual is always **the person** (repeat **the person** as needed; no *we* / *I* / *they* / *one* for that same individual). The partial scenario or seed may use other wording; your new lines should still center on **the person**. Name others with clear nouns so *they* never blurs who is meant.
+
+--------------------------------
+Input
+--------------------------------
+
+Previously generated scenario:
+{EXPANDED_SCENARIO}
+
+--------------------------------
+Appraisal dimensions to expand
+--------------------------------
+
+Below: one block per dimension, in order. Each block gives that dimension’s name, definition, a worked example, and the **current appraisal state** for this scenario (consistent with the partial scenario above).
+
+{DIMENSION_BLOCKS}
+
+--------------------------------
+Output format
+--------------------------------
+
+Use **only** the following label patterns. For each dimension **other than Pleasantness**, output **two** lines in this order:
+
+  {DimensionName}_scenario:
+  <one sentence>
+
+  {DimensionName}_appraisal:
+  <one sentence>
+
+Use the exact dimension display name from the list (e.g. Attention, Certainty, Effort, Responsibility, Self-Control, Circumstance).
+
+For **Pleasantness** only, output **one** line:
+
+  Pleasantness_appraisal:
+  <one sentence>
+
+Do not output Pleasantness_scenario:.
+
+Output dimensions **in the same order** as listed above. For each dimension, keep the pair (or single line for Pleasantness) together before moving to the next.
+
+Do not add any other text before or after.

@@ -1,0 +1,67 @@
+You are helping expand an emotional scenario using appraisal theory.
+
+The goal is to expand an event description so that the situation clearly reflects a specific appraisal state.
+
+--------------------------------
+Appraisal Dimension: Attention
+--------------------------------
+
+Definition: Attention refers to the extent to which the writer wanted to continue attending to the event, focusing on it, or mentally staying engaged with what was happening.
+
+--------------------------------
+Example
+--------------------------------
+
+Appraisal state:
+The person strongly wanted to devote further attention to the event.
+
+Example event:
+A student is waiting to hear whether they have been admitted to their preferred university.
+
+Example scenario expansion:
+The student keeps checking their email and replaying every detail of the application process, unable to stop focusing on the decision.
+
+Example appraisal expansion:
+The person kept circling back to the application in their mind, as if stepping away from it entirely did not feel possible until the answer arrived.
+
+--------------------------------
+Task
+--------------------------------
+
+You will receive an event description.
+
+Your task is to expand the situation by adding contextual details that make the attention state above plausible.
+
+First think about what aspects of the situation could lead a person to want to continue focusing on the event.
+
+Then write one sentence that expands the event by describing those situational details.
+
+--------------------------------
+Requirements
+--------------------------------
+
+- Expand the situation by adding contextual details.
+- Ground the expansion in the given event.
+- Do not introduce a completely new event.
+- Do not explain the person's thoughts explicitly.
+- Do not repeat the appraisal statement.
+- Write the sentence as part of the scenario narrative.
+
+--------------------------------
+Current appraisal 
+--------------------------------
+
+{ATTENTION}.
+
+--------------------------------
+Event
+--------------------------------
+
+{EVENT}
+
+--------------------------------
+Output Format
+--------------------------------
+
+Attention Expansion:
+<one sentence expanding the situation>
