@@ -1,0 +1,71 @@
+You are helping expand an emotional scenario using appraisal theory.
+
+The goal is to expand an event description so that the situation clearly reflects the given appraisal states.
+
+--------------------------------
+Task
+--------------------------------
+
+You will receive one event and one emotion, plus a list of appraisal dimensions. Each dimension has a definition, an example, and the current appraisal state for this scenario.
+
+Your task is to write exactly one expansion sentence for each dimension listed below. Each sentence should add contextual details that make that dimension's appraisal state plausible in the situation. The sentences should all refer to the same event and must not contradict each other; they can and should supplement different aspects of the situation (e.g. what was uncertain, what required effort), so that together they give a fuller picture from different angles.
+
+--------------------------------
+Requirements
+--------------------------------
+
+- Ground every sentence in the given event. Do not introduce a completely new event.
+- Do not explain the person's thoughts or feelings explicitly (e.g. avoid "they felt that...").
+- Do not repeat the appraisal statement; show the appraisal through situational details instead.
+- Write each sentence as part of the scenario narrative (describe what happened or what the situation was like).
+
+--------------------------------
+Input
+--------------------------------
+
+Event: My 2 year old broke her leg, and we felt helpless to assist her.
+
+Emotion: fear
+
+--------------------------------
+Appraisal dimensions (write one expansion sentence per dimension)
+--------------------------------
+
+Attention
+Definition: Attention refers to the extent to which the person wanted to devote further attention to the event.
+Example emotion and appraisal state: The person was feeling anxious, and they strongly wanted to devote further attention to the event.
+Example event: A student is waiting to hear whether they have been admitted to their preferred university.
+Example expansion: The student keeps checking their email and replaying every detail of the application process, unable to stop focusing on the decision.
+Current appraisal and emotion state: The person was feeling fear, and The person felt that they strongly wanted to devote further attention to the event..
+
+Effort
+Definition: Effort refers to the extent to which the person needed to expend mental or physical effort to deal with the situation.
+Example emotion and appraisal state: The person was feeling stressed. The person felt that they needed to expend a great deal of mental or physical effort to deal with the situation.
+Example event: A student is preparing for an important final exam.
+Example expansion: The exam covered months of difficult material, and the student spent long nights reviewing notes, solving practice problems, and trying to master the topics before the test.
+Current appraisal and emotion state: The person was feeling fear. The person felt that they needed to expend a great deal of mental or physical effort to deal with the situation.
+
+Pleasantness
+Definition: Pleasantness refers to the extent to which the person experienced the event as pleasant.
+Example emotion and appraisal state: The person was feeling happy. The person felt that the event was very pleasant.
+Example event: A student receives the news that they have been accepted into their preferred university.
+Example expansion: The acceptance email confirmed that the student had been admitted to their first-choice program after months of waiting.
+Current appraisal and emotion state: The person was feeling fear. The person felt that the event was not pleasant.
+
+Responsibility
+Definition: Responsibility refers to the extent to which the person was responsible for the situation.
+Example emotion and appraisal state: The person was feeling guilty. The person felt that they were very responsible for the situation.
+Example event: A student accidentally sends a confidential email to the wrong person.
+Example expansion: The student typed the wrong recipient address while sending the message, which caused the confidential information to be delivered to someone who was not supposed to receive it.
+Current appraisal and emotion state: The person was feeling fear. The person felt that they were not responsible for the situation.
+
+--------------------------------
+Output format
+--------------------------------
+
+For each dimension listed above, output exactly one sentence. Use this format (use the exact dimension names as given):
+
+DimensionName:
+<one sentence>
+
+Repeat for each dimension. Do not add any other text before or after.

@@ -2,6 +2,7 @@
 Call evaluator model (e.g. vLLM / OpenAI-compatible API). Returns raw response string.
 """
 import os
+import unicodedata
 from openai import OpenAI
 
 
@@ -10,22 +11,43 @@ def call_evaluator(
     model: str,
     *,
     base_url: str | None = None,
-    api_key: str = "dummy",
+    api_key: str | None = None,
     temperature: float = 0.0,
-    max_tokens: int = 512,
+    max_tokens: int | None = 512,
     **kwargs,
 ) -> str:
     """
     Send prompt to the evaluator model (OpenAI-compatible, e.g. vLLM), return raw response text.
+
+    max_tokens: pass None to omit (matches minimal OpenAI relay calls); default 512 for JSON-heavy evals.
+    Response text is normalized with unicodedata NFKC (full-width / compatibility forms).
     """
     base_url = base_url or os.environ.get("VLLM_BASE_URL", "http://localhost:8000/v1")
-    client = OpenAI(api_key=api_key, base_url=base_url, timeout=60.0)
-    resp = client.chat.completions.create(
-        model=model,
-        messages=[{"role": "user", "content": prompt}],
-        temperature=temperature,
-        max_tokens=max_tokens,
-        **kwargs,
+    # vLLM's OpenAI-compatible server often uses "EMPTY" as a placeholder API key.
+    # If the server is started with --api-key, the client must send a matching key.
+    api_key = (
+        api_key
+        or os.environ.get("VLLM_API_KEY")
+        or os.environ.get("OPENAI_API_KEY")
+        or "EMPTY"
     )
+    client = OpenAI(api_key=api_key, base_url=base_url, timeout=60.0)
+    create_kwargs: dict = {
+        "model": model,
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": temperature,
+    }
+    if max_tokens is not None:
+        use_mct = os.environ.get("OPENAI_USE_MAX_COMPLETION_TOKENS", "").lower() in (
+            "1",
+            "true",
+            "yes",
+        )
+        if use_mct:
+            create_kwargs["max_completion_tokens"] = max_tokens
+        else:
+            create_kwargs["max_tokens"] = max_tokens
+    resp = client.chat.completions.create(**create_kwargs, **kwargs)
     content = resp.choices[0].message.content
-    return (content or "").strip()
+    text = (content or "").strip()
+    return unicodedata.normalize("NFKC", text)

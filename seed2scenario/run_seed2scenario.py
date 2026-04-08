@@ -41,7 +41,7 @@ SCENARIO_SUMMARY_DIMS = [
 
 # -------- API config (可改为环境变量 OPENAI_API_KEY / OPENAI_BASE_URL) --------
 API_KEY = os.environ.get(
-    "OPENAI_API_KEY", ""
+    "OPENAI_API_KEY", "sk-8kgU8Q3tLwhvJ6wtGGVD46z0kIGIaWZElebK6Ag5NIDL18Xe"
 )
 BASE_URL = os.environ.get("OPENAI_BASE_URL", "http://35.164.11.19:3887/v1")
 MODEL = "gpt-4o"

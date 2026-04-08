@@ -1,0 +1,19 @@
+You are given (1) a dialog between a user and an assistant about an emotionally significant event, and (2) **one** narrative description of the user’s cognitive appraisal at the time of the event. In cognitive appraisal theory, emotional responding is tied to evaluations along **several** dimensions; in this task you are given **only one** of those dimensions as additional information—the rest are intentionally omitted. That description is reference material about how the situation was evaluated along that single dimension; it is **not** part of the spoken dialog.
+
+The user describes their own experience; the assistant only replies in a supportive role. Infer the discrete emotion the user felt toward the situation at the time the event happened (as the user describes it). Do not infer the assistant’s emotion. If the tone in later turns differs from the core event, prioritize the emotion that fits the event itself. Use the dialog together with the single appraisal description as evidence.
+
+Allowed labels (choose exactly one). Output the label exactly as written—same spelling and capitalization:
+
+Anger, Disgust, Fear, Guilt, Joy, Sadness, Shame
+
+The dialog:
+
+{context_text}
+
+Appraisal description (**one dimension** from cognitive appraisal theory):
+
+{appraisal_expansion_block}
+
+You may draw on cognitive appraisal theory to interpret this dimension and relate it to the emotion label, remembering that other appraisal dimensions are not shown.
+
+Output only that single label. No punctuation, no explanation, no other text.

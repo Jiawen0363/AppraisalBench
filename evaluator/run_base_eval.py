@@ -11,6 +11,7 @@ from model_utils import call_evaluator
 
 def parse_args():
     p = argparse.ArgumentParser()
+    p.add_argument("--vllm_endpoint", type=str, default=None, help="vLLM/OpenAI-compatible API base URL (default: VLLM_BASE_URL env or http://localhost:8000/v1)")
     p.add_argument("--eval_model", type=str, required=True)
     p.add_argument("--eval_prompt", type=str, required=True)
     p.add_argument("--event_corpus", type=str, required=True)
@@ -43,7 +44,7 @@ def main():
         for i, row in enumerate(rows):
             builder = DataBuilder(prompt_template, row)
             prompt = builder.build_eval_base_prompt()
-            raw = call_evaluator(prompt, model=args.eval_model)
+            raw = call_evaluator(prompt, model=args.eval_model, base_url=args.vllm_endpoint)
             rec = {"sample_id": row["Sentence_id"], "raw_prediction": raw}
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
             if args.verbose:

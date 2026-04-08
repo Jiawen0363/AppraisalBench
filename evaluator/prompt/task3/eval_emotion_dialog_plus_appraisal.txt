@@ -1,0 +1,19 @@
+You are given (1) a dialog between a user and an assistant about an emotionally significant event, and (2) narrative descriptions of the user’s cognitive appraisal along several dimensions at the time of the event. These appraisal descriptions are reference material about how the situation was cognitively evaluated; they are not part of the spoken dialog.
+
+The user describes their own experience; the assistant only replies in a supportive role. Infer the discrete emotion the user felt toward the situation at the time the event happened (as the user describes it). Do not infer the assistant’s emotion. If the tone in later turns differs from the core event, prioritize the emotion that fits the event itself. Use both the dialog and the appraisal descriptions as evidence.
+
+Allowed labels (choose exactly one). Output the label exactly as written—same spelling and capitalization:
+
+Anger, Disgust, Fear, Guilt, Joy, Sadness, Shame
+
+The dialog:
+
+{context_text}
+
+Appraisal descriptions (one per dimension):
+
+{appraisal_expansion_block}
+
+You may refer to cognitive appraisal theory to support your inference.
+
+Output only that single label. No punctuation, no explanation, no other text.

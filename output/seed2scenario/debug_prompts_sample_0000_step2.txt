@@ -1,0 +1,77 @@
+You are helping expand an emotional scenario using appraisal theory.
+
+The following scenario text is already partially expanded.
+Your job is to add expansions for additional appraisal dimensions without contradicting the existing scenario.
+
+--------------------------------
+Task
+--------------------------------
+
+You will receive:
+1) An emotion label.
+2) A previously generated expanded scenario (anchor appraisal dimensions).
+3) A list of additional appraisal dimensions (each with a definition, an example, and the current appraisal state).
+
+Write exactly one expansion sentence for each dimension listed below.
+
+Constraints:
+- Do not contradict or change the previously generated scenario sentences.
+- Only add local, supplementary contextual details that make the given dimension's appraisal state plausible.
+- Do not explain the person's thoughts explicitly (avoid phrases like "they believed that...").
+- Do not repeat the appraisal statement; show the appraisal through situational details.
+
+--------------------------------
+Input
+--------------------------------
+
+Emotion: fear
+
+Previously generated scenario:
+Attention:
+Every glance at her small, twitching toes or careful movement made it impossible to look away, as they tried desperately to assess the extent of the injury.
+
+Effort:
+They scrambled to find any immediate help, rifling through their phone for emergency contacts and wrapping her leg gently before carrying her to the car.
+
+Pleasantness:
+The pained cries echoed through the room, filling every moment with an unbearable unease as they braced themselves to respond as best they could.
+
+Responsibility:
+The toddler had tripped over a toy left out on the floor, something they hadn’t noticed earlier, but they knew it wasn’t something they had placed there themselves.
+
+--------------------------------
+Appraisal dimensions to expand (one expansion sentence per dimension)
+--------------------------------
+
+Certainty
+Definition: Certainty refers to the extent to which the person clearly understood what was happening or could predict what would happen next.
+Example emotion and appraisal state: The person was feeling anxious, and they were very uncertain about what was happening.
+Example event: A patient is waiting for the results of a medical test.
+Example expansion: The doctor had only said that the results would arrive sometime that week, leaving the patient unsure about what the diagnosis might be or when they would find out.
+Current appraisal and emotion state: The person was feeling fear, and The person felt that they were only slightly certain about what was happening in the situation..
+
+Self-Control
+Definition: Self-control refers to the extent to which the person is able to influence or control what is happening.
+Example emotion and appraisal state: The person was feeling disappointed, and they believed they could influence the outcome through their own actions.
+Example event: Amy gets admitted to a private liberal arts college instead of the local state college she hoped to attend.
+Example expansion: Amy had spent weeks carefully preparing her college applications and believed that the quality of her essays and materials could influence the admissions decision.
+Current appraisal and emotion state: The person was feeling fear, and The person felt that they had little ability to influence what was happening in the situation..
+
+Circumstance
+Definition: Circumstance refers to the extent to which the event could not have been changed or influenced by anyone.
+Example emotion and appraisal state: The person was feeling afraid. The person felt that the event could not have been changed or influenced by anyone.
+Example event: A family’s home is badly damaged during an earthquake.
+Example expansion: The earthquake struck suddenly without warning and caused severe damage to the house within seconds.
+Current appraisal and emotion state: The person was feeling fear. The person felt that the event could probably have been changed or influenced by someone.
+
+--------------------------------
+Output format
+--------------------------------
+
+For each dimension listed above, output exactly one sentence.
+Use this format (use the exact dimension names as given):
+
+DimensionName:
+<one sentence>
+
+Repeat for each dimension. Do not add any other text before or after.

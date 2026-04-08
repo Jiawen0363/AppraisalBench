@@ -17,6 +17,19 @@ def load_corpus_tsv(path: str | Path) -> list[dict]:
     return rows
 
 
+# Corpus appraisal column names (same as emotion_appraisal_corpus.tsv)
+APPRAISAL_KEYS = [
+    "Attention", "Certainty", "Effort", "Pleasant",
+    "Responsibility", "Control", "Circumstance",
+]
+
+
+def format_appraisal_from_corpus_row(corpus_row: dict) -> str:
+    """Format one corpus row's appraisal as 'Attention: 3, Certainty: 1, ...' for prompt."""
+    parts = [f"{k}: {corpus_row.get(k, '')}" for k in APPRAISAL_KEYS]
+    return ", ".join(parts)
+
+
 def load_dialogs_jsonl(path: str | Path) -> list[dict]:
     """Load dialogs.jsonl; return list of records (profile_id, corpus_id, conversation)."""
     path = Path(path)
@@ -30,16 +43,23 @@ def load_dialogs_jsonl(path: str | Path) -> list[dict]:
     return rows
 
 
-def build_dialog_eval_prompt(prompt_template: str, dialog_record: dict, mode: str = "dialog_full") -> str:
+def build_dialog_eval_prompt(
+    prompt_template: str,
+    dialog_record: dict,
+    mode: str = "dialog_full",
+    corpus_row: dict | None = None,
+) -> str:
     """
     Build evaluator prompt for one dialog.
-    - dialog_first: use only the first User message as context_text (evaluator infers emotion from that).
+    - dialog_first: use only the first User message as context_text.
     - dialog_full: use full conversation as context_text.
+    - dialog_first_given_appraisal / dialog_full_given_appraisal: same context, but inject
+      {appraisal_values} from corpus_row (gold from emotion_appraisal_corpus.tsv).
     dialog_record must have "conversation": [{"User": "..."}, {"Assistant": "..."}, ...].
     """
     conv = dialog_record.get("conversation", [])
-    if mode == "dialog_first":
-        # First User turn only
+    use_first = mode in ("dialog_first", "dialog_first_given_appraisal")
+    if use_first:
         for turn in conv:
             if "User" in turn:
                 context_text = turn["User"]
@@ -52,7 +72,14 @@ def build_dialog_eval_prompt(prompt_template: str, dialog_record: dict, mode: st
             for role, content in turn.items():
                 lines.append(f"{role}: {content}")
         context_text = "\n".join(lines)
-    return prompt_template.replace("{context_text}", context_text)
+
+    prompt = prompt_template.replace("{context_text}", context_text)
+    if "{appraisal_values}" in prompt:
+        if corpus_row is not None:
+            prompt = prompt.replace("{appraisal_values}", format_appraisal_from_corpus_row(corpus_row))
+        else:
+            prompt = prompt.replace("{appraisal_values}", "(appraisal not found for this corpus_id)")
+    return prompt
 
 
 class DataBuilder:

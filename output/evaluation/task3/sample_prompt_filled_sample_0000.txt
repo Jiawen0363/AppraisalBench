@@ -1,0 +1,28 @@
+You are given (1) a dialog between a user and an assistant about an emotionally significant event, and (2) narrative descriptions of the user’s cognitive appraisal along several dimensions at the time of the event. These appraisal descriptions are reference material about how the situation was cognitively evaluated; they are not part of the spoken dialog.
+
+The user describes their own experience; the assistant only replies in a supportive role. Infer the discrete emotion the user felt toward the situation at the time the event happened (as the user describes it). Do not infer the assistant’s emotion. If the tone in later turns differs from the core event, prioritize the emotion that fits the event itself. Use both the dialog and the appraisal descriptions as evidence.
+
+Allowed labels (choose exactly one). Output the label exactly as written—same spelling and capitalization:
+
+Anger, Disgust, Fear, Guilt, Joy, Sadness, Shame
+
+The dialog:
+
+User: My 2-year-old broke her leg, and we felt helpless to assist her. I keep replaying everything in my head, wondering if there’s something I missed or could have done differently, but it all happened so fast.
+Assistant: That sounds so hard—watching something like that happen and feeling helpless must have been overwhelming. It makes sense you'd keep replaying it in your mind.
+User: It’s like every decision feels so heavy now—trying to figure out the best care, the right steps, and still feeling unsure if I’m doing enough.
+Assistant: That sounds exhausting, having all those heavy decisions weighing on you. It’s a lot to carry, especially when you’re still unsure.
+User: I just keep second-guessing everything—like, what if I’m overlooking something important or not asking the right questions? It’s hard to feel confident about anything right now.
+Assistant: I hear you—it’s tough to feel confident when you’re second-guessing everything like that. It sounds like there’s so much on your mind.
+
+Appraisal descriptions (one per dimension):
+
+Attention: The person felt magnetically drawn to the unfolding situation, unable to detach until they fully understood every aspect of their child's condition and care.
+Certainty: The person felt that they could grasp only a few aspects of the situation clearly, leaving many parts still unclear and open to interpretation.
+Effort: No amount of information or action seemed to alleviate the person's sense of endless effort, as they cycled through worry and strategies without a clear endpoint.
+Pleasantness: The person experienced the situation as deeply distressing, with no part of it offering any comfort or relief.
+Responsibility: The person saw the sequence of events as beyond their control, feeling that the accident stemmed from the unpredictable environment rather than any direct action they took.
+Control: The person recognized that their ability to steer the conversation or make confident decisions in the situation was minimal.
+Circumstance: The person viewed the accident as something that might have been mitigated with swift and effective intervention, as opposed to being entirely inevitable.
+
+Output only that single label. No punctuation, no explanation, no other text.

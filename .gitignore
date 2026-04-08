@@ -20,3 +20,9 @@ env/
 
 # Optional: uncomment to avoid pushing large outputs
 # output/
+
+# Local API keys (see run_tasks/.env.example)
+run_tasks/.env
+
+# Local scratch / large data (do not push)
+4702/

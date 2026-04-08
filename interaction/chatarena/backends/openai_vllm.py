@@ -43,25 +43,30 @@ class VLLMChat(IntelligenceBackend):
         self.max_latest_messages = max_latest_messages
 
     def _get_response(self, messages, num_responses=1):
+        base_kwargs = {
+            "model": self.model,
+            "messages": messages,
+            "temperature": self.temperature,
+            "top_p": self.top_p,
+            "n": num_responses,
+            "max_tokens": self.max_tokens,
+        }
         if "llama-3" in self.model.lower():
-            completion = self.client.chat.completions.create(
-                model=self.model,
-                messages=messages,
-                temperature=self.temperature,
-                top_p=self.top_p,
-                max_tokens=self.max_tokens,
-                n=num_responses,
-                stop=STOP_LLAMA3_INSTRUCT
-            )
-        else:
-            completion = self.client.chat.completions.create(
-                model=self.model,
-                messages=messages,
-                temperature=self.temperature,
-                top_p=self.top_p,
-                max_tokens=self.max_tokens,
-                n=num_responses
-            )
+            base_kwargs["stop"] = STOP_LLAMA3_INSTRUCT
+
+        try:
+            completion = self.client.chat.completions.create(**base_kwargs)
+        except Exception as e:
+            # Some OpenAI-compatible gateways/models (e.g., newer GPT endpoints)
+            # require max_completion_tokens instead of max_tokens.
+            msg = str(e)
+            if "max_completion_tokens" in msg and "max_tokens" in msg:
+                retry_kwargs = dict(base_kwargs)
+                retry_kwargs.pop("max_tokens", None)
+                retry_kwargs["max_completion_tokens"] = self.max_tokens
+                completion = self.client.chat.completions.create(**retry_kwargs)
+            else:
+                raise
 
         if num_responses > 1:
             response = [c.message.content for c in completion.choices]

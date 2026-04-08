@@ -16,7 +16,7 @@ Use the appraisal dimensions below to guide how your character feels and talks a
 
 What each dimension means (most likely, at the time of the event, the person…):
 
-• **Attention** — …wanted to devote further attention to the event.
+• **Attention** — …wanted to devote further attention to the event. 
 • **Certainty** — …was certain about what was happening.
 • **Effort** — …had to expend mental or physical effort to deal with the situation.
 • **Pleasantness** — …found that the event was pleasant.
