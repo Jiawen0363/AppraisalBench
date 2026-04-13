@@ -2,8 +2,6 @@
 # Task 3: dialog + scenario appraisal_expansion emotion eval (gold from scenarios.jsonl).
 set -euo pipefail
 
-TASK3_PROVIDER=openai
-
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT" || exit 1
 
@@ -14,7 +12,11 @@ if [[ -f "$ROOT/run_tasks/.env" ]]; then
   set +a
 fi
 
-provider="${1:-$TASK3_PROVIDER}"
+if [[ -z "${1:-}" ]]; then
+  echo "Missing provider: pass openai or deepseek or qwen as the first argument." >&2
+  exit 1
+fi
+provider="${1}"
 provider="${provider,,}"
 
 if [[ "$provider" == "deepseek" ]]; then
@@ -32,8 +34,13 @@ elif [[ "$provider" == "openai" ]]; then
     echo "Set OPENAI_API_KEY in run_tasks/.env for provider=openai" >&2
     exit 1
   fi
+elif [[ "$provider" == "qwen" ]]; then
+  # Local vLLM (OpenAI-compatible) for Qwen models.
+  vllm_endpoint="${QWEN_BASE_URL:-http://127.0.0.1:8003/v1}"
+  eval_model="${QWEN_MODEL:-/data/models/Qwen3-4B}"
+  export OPENAI_API_KEY="${QWEN_API_KEY:-EMPTY}"
 else
-  echo "Unknown provider: $provider (use openai or deepseek, or: bash $0 openai|deepseek)" >&2
+  echo "Unknown provider: $provider (use openai|deepseek|qwen)" >&2
   exit 1
 fi
 

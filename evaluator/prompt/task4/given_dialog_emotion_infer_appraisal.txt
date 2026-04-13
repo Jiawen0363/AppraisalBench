@@ -1,0 +1,18 @@
+Read the following conversation. Roles: Experiencer (the person in the situation); Responder (the conversational agent).
+
+{Dialogue}
+
+The emotion label below is given for this item; use it when judging appraisals.
+
+{Emotion_sentence}
+
+The question and all options refer to the Experiencer's appraisal of their situation - the subjective meaning the Experiencer gives to what happened. Do not choose answers that describe the Responder's stance or feelings.
+
+Question: [DIMENSION-SPECIFIC QUESTION]
+
+A. {option A}
+B. {option B}
+C. {option C}
+D. {option D}
+
+Answer with only A or B or C or D.

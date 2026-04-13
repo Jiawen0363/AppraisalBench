@@ -33,8 +33,17 @@ elif [[ "$provider" == "openai" ]]; then
     echo "Set OPENAI_API_KEY in run_tasks/.env for provider=openai" >&2
     exit 1
   fi
+elif [[ "$provider" == "qwen" ]]; then
+  # Local vLLM (OpenAI-compatible) for Qwen models.
+  export QWEN_BASE_URL="${QWEN_BASE_URL:-http://127.0.0.1:8002/v1}"
+  export QWEN_API_KEY="${QWEN_API_KEY:-EMPTY}"
+  # IMPORTANT: must match /v1/models returned id.
+  export QWEN_MODEL="${QWEN_MODEL:-/data/models/Qwen3-4B}"
+  vllm_endpoint="$QWEN_BASE_URL"
+  eval_model="$QWEN_MODEL"
+  export OPENAI_API_KEY="$QWEN_API_KEY"
 else
-  echo "Unknown provider: $provider (use openai or deepseek, or: bash $0 openai|deepseek)" >&2
+  echo "Unknown provider: $provider (use openai|deepseek|qwen, or: bash $0 openai|deepseek|qwen)" >&2
   exit 1
 fi
 

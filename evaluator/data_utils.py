@@ -55,17 +55,20 @@ def build_dialog_eval_prompt(
     - dialog_full: use full conversation as context_text.
     - dialog_first_given_appraisal / dialog_full_given_appraisal: same context, but inject
       {appraisal_values} from corpus_row (gold from emotion_appraisal_corpus.tsv).
-    dialog_record must have "conversation": [{"User": "..."}, {"Assistant": "..."}, ...].
+    dialog_record must have "conversation" turns with role keys, e.g. Experiencer/Responder
+    (legacy User/Assistant still supported).
     """
     conv = dialog_record.get("conversation", [])
     use_first = mode in ("dialog_first", "dialog_first_given_appraisal")
     if use_first:
+        context_text = ""
         for turn in conv:
+            if "Experiencer" in turn:
+                context_text = turn["Experiencer"]
+                break
             if "User" in turn:
                 context_text = turn["User"]
                 break
-        else:
-            context_text = ""
     else:
         lines = []
         for turn in conv:

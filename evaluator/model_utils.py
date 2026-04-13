@@ -22,7 +22,18 @@ def call_evaluator(
     max_tokens: pass None to omit (matches minimal OpenAI relay calls); default 512 for JSON-heavy evals.
     Response text is normalized with unicodedata NFKC (full-width / compatibility forms).
     """
-    base_url = base_url or os.environ.get("VLLM_BASE_URL", "http://localhost:8000/v1")
+    if base_url is not None and not str(base_url).strip():
+        base_url = None
+    base_url = (
+        base_url
+        or os.environ.get("OPENAI_BASE_URL")
+        or os.environ.get("VLLM_BASE_URL")
+    )
+    if not base_url:
+        raise ValueError(
+            "Missing evaluator base URL. Set OPENAI_BASE_URL/VLLM_BASE_URL "
+            "or pass --vllm_endpoint from your run script."
+        )
     # vLLM's OpenAI-compatible server often uses "EMPTY" as a placeholder API key.
     # If the server is started with --api-key, the client must send a matching key.
     api_key = (
