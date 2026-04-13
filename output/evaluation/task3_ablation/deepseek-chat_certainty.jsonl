@@ -187,3 +187,14 @@
 {"sample_id": "sample_0186", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "guilt", "golden_emotion": "guilt", "prediction": true}
 {"sample_id": "sample_0187", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "sadness", "golden_emotion": "sadness", "prediction": true}
 {"sample_id": "sample_0188", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "sadness", "golden_emotion": "sadness", "prediction": true}
+{"sample_id": "sample_0189", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "joy", "golden_emotion": "joy", "prediction": true}
+{"sample_id": "sample_0190", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "anger", "golden_emotion": "shame", "prediction": false}
+{"sample_id": "sample_0191", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "guilt", "golden_emotion": "guilt", "prediction": true}
+{"sample_id": "sample_0192", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "joy", "golden_emotion": "joy", "prediction": true}
+{"sample_id": "sample_0193", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "joy", "golden_emotion": "joy", "prediction": true}
+{"sample_id": "sample_0194", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "sadness", "golden_emotion": "sadness", "prediction": true}
+{"sample_id": "sample_0195", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "joy", "golden_emotion": "joy", "prediction": true}
+{"sample_id": "sample_0196", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "guilt", "golden_emotion": "shame", "prediction": false}
+{"sample_id": "sample_0197", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "fear", "golden_emotion": "shame", "prediction": false}
+{"sample_id": "sample_0198", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "joy", "golden_emotion": "joy", "prediction": true}
+{"sample_id": "sample_0199", "given_information": "dialog_and_appraisal_expansion:certainty", "only_appraisal_dim": "certainty", "predicted_emotion": "joy", "golden_emotion": "joy", "prediction": true}
