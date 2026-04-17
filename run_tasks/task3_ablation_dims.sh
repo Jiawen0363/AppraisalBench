@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Task 3 ablation: seven runs, each with exactly one appraisal_expansion dimension in the prompt.
+# This script always appends to existing output files.
 # Usage: bash run_tasks/task3_ablation_dims.sh openai
 # Optional env: same as task3.sh (DIALOG_FILE, SCENARIOS_FILE, EVAL_PROMPT, etc.)
 # Outputs: output/evaluation/task3_ablation/<model>_<dim>.jsonl
@@ -61,7 +62,8 @@ for dim in "${DIMS[@]}"; do
     --dialog_file "$dialog_file" \
     --scenarios_file "$scenarios_file" \
     --output_file "$output_file" \
-    --only_appraisal_dim "$dim"
+    --only_appraisal_dim "$dim" \
+    --append
 done
 
 echo "Done. Outputs under $out_dir" >&2

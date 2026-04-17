@@ -1,0 +1,15 @@
+Input: emotion_appraisal_corpus.tsv
+Total rows: 1001
+Included: 901 (90.01%)
+Excluded: 100 (9.99%)
+
+Active exclusion flags:
+  exclude_guilt_nearest_shame=True
+  exclude_shame_nearest_guilt=True
+  exclude_guilt_not_nearest=False
+  exclude_shame_not_nearest=False
+  exclude_shame_guilt_ambiguous=False (margin<0.05)
+
+Exclude reasons:
+  shame_labeled_but_nearest_guilt: 77
+  guilt_labeled_but_nearest_shame: 23

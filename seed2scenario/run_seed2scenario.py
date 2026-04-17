@@ -25,6 +25,13 @@ from openai import OpenAI
 # Allow importing seed2scenario (the .py in same dir) when run from project root
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from appraisal_dimensions_static import (  # noqa: E402
+    DIM_META,
+    DIM_ORDER,
+    DIMENSION_PROMPT_STATIC,
+    DimMeta,
+)
+
 # Per-dimension expansions after Step 1 / Step 2. Pleasantness has only appraisal_expansion.
 ExpansionPerDim = Dict[str, str]
 
@@ -54,6 +61,7 @@ if not API_KEY:
 # Retry config
 MAX_RETRIES = 5
 RETRY_DELAY = 2.0
+PARSE_RETRY_TIMES = 3
 
 # Paths
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -127,6 +135,9 @@ def parse_dimension_outputs(output_text: str, expected_output_names: List[str]) 
     buf: List[str] = []
 
     for line in output_text.splitlines():
+        # Some providers inject zero-width characters inside labels (e.g., Responsibility_sc‌enario).
+        # Remove format/control chars before regex parsing while keeping human-readable content intact.
+        line = "".join(ch for ch in line if unicodedata.category(ch) != "Cf")
         s = line.strip()
         if not s:
             continue
@@ -154,6 +165,31 @@ def parse_dimension_outputs(output_text: str, expected_output_names: List[str]) 
     if missing:
         raise ValueError(f"Missing outputs for: {missing}. Raw output: {output_text[:500]}")
     return results
+
+
+def call_and_parse_with_retry(
+    client,
+    prompt: str,
+    expected_labels: List[str],
+    step_name: str,
+) -> Dict[str, str]:
+    """
+    Request model output and parse structured labels with retries.
+    Useful when model returns malformed or partially missing label blocks.
+    """
+    last_err = None
+    for attempt in range(PARSE_RETRY_TIMES):
+        try:
+            raw = call_api_with_retry(client, messages=[{"role": "user", "content": prompt}])
+            return parse_dimension_outputs(raw, expected_labels)
+        except ValueError as e:
+            last_err = e
+            if attempt < PARSE_RETRY_TIMES - 1:
+                print(
+                    f"[{step_name}] parse failed (attempt {attempt + 1}/{PARSE_RETRY_TIMES}), retrying..."
+                )
+                time.sleep(RETRY_DELAY * (attempt + 1))
+    raise last_err
 
 
 def dual_track_expected_output_labels(dim_keys: List[str]) -> List[str]:
@@ -265,72 +301,6 @@ def build_scenario(
 
 
 @dataclass(frozen=True)
-class DimMeta:
-    json_key: str
-    output_name: str  # e.g. "Attention"
-    corpus_col: str  # e.g. "Attention"
-    placeholder_token: str  # e.g. "{ATTENTION}"
-
-
-DIM_ORDER = ["attention", "certainty", "effort", "pleasantness", "responsibility", "control", "circumstance"]
-DIM_META: Dict[str, DimMeta] = {
-    "attention": DimMeta(
-        json_key="attention",
-        output_name="Attention",
-        corpus_col="Attention",
-        placeholder_token="{ATTENTION}",
-    ),
-    "certainty": DimMeta(
-        json_key="certainty",
-        output_name="Certainty",
-        corpus_col="Certainty",
-        placeholder_token="{CERTAINTY}",
-    ),
-    "effort": DimMeta(
-        json_key="effort",
-        output_name="Effort",
-        corpus_col="Effort",
-        placeholder_token="{EFFORT}",
-    ),
-    "pleasantness": DimMeta(
-        json_key="pleasantness",
-        output_name="Pleasantness",
-        corpus_col="Pleasant",
-        placeholder_token="{PLEASANTNESS}",
-    ),
-    "responsibility": DimMeta(
-        json_key="responsibility",
-        output_name="Responsibility",
-        corpus_col="Responsibility",
-        placeholder_token="{RESPONSIBILITY}",
-    ),
-    "control": DimMeta(
-        json_key="control",
-        output_name="Self-Control",
-        corpus_col="Control",
-        placeholder_token="{SELF_CONTROL}",
-    ),
-    "circumstance": DimMeta(
-        json_key="circumstance",
-        output_name="Circumstance",
-        corpus_col="Circumstance",
-        placeholder_token="{CIRCUMSTANCE}",
-    ),
-}
-
-
-@dataclass(frozen=True)
-class DimPromptSource:
-    """Per-dimension definition + worked examples (appraisal-only; no corpus emotion label). All hardcoded."""
-
-    definition: str
-    example_appraisal_state: str
-    example_event: str
-    example_scenario_expansion: str  # empty string for pleasantness
-    example_appraisal_expansion: str
-
-
-@dataclass(frozen=True)
 class DimStatic:
     definition: str
     example_appraisal_state: str
@@ -338,119 +308,6 @@ class DimStatic:
     example_scenario_expansion: str
     example_appraisal_expansion: str
     current_state_template: str  # equals DIM_META placeholder_token; replaced with state sentence in blocks
-
-
-DIMENSION_PROMPT_STATIC: Dict[str, DimPromptSource] = {
-    "attention": DimPromptSource(
-        definition=(
-            "Attention refers to the extent to which the writer wanted to continue attending to the event, "
-            "focusing on it, or mentally staying engaged with what was happening."
-        ),
-        example_appraisal_state="The person strongly wanted to devote further attention to the event.",
-        example_event=(
-            "The person is waiting to hear whether admission to a preferred university has been granted."
-        ),
-        example_scenario_expansion=(
-            "The person keeps checking email and replaying details of the application process, "
-            "unable to stop focusing on the decision."
-        ),
-        example_appraisal_expansion=(
-            "The person kept circling back to the application, as if stepping away entirely "
-            "did not feel possible until the answer arrived."
-        ),
-    ),
-    "certainty": DimPromptSource(
-        definition=(
-            "Certainty refers to the extent to which the writer was certain about what was happening in the "
-            "situation, including how well they understood what was going on."
-        ),
-        example_appraisal_state="The person was very uncertain about what was happening.",
-        example_event="The person is waiting for the results of a medical test.",
-        example_scenario_expansion=(
-            "A doctor had only said that the results would arrive sometime that week, with no specific day "
-            "or time and no preview of what the numbers might mean."
-        ),
-        example_appraisal_expansion=(
-            "The person could not pin down what was coming or when anything definitive would land; "
-            "the timeline and implications both seemed open-ended."
-        ),
-    ),
-    "effort": DimPromptSource(
-        definition=(
-            "Effort refers to the extent to which the writer had to expend mental or physical effort to deal "
-            "with the situation, respond to it, or cope with what was happening."
-        ),
-        example_appraisal_state=(
-            "The person felt that they needed to expend a great deal of mental or physical effort "
-            "to deal with the situation."
-        ),
-        example_event="The person is preparing for an important final exam.",
-        example_scenario_expansion=(
-            "The exam covered months of difficult material, and the person spent long nights reviewing notes, "
-            "solving practice problems, and drilling weak topics before the test."
-        ),
-        example_appraisal_expansion=(
-            "The person experienced the preparation as heavy and ongoing, with attention pulled back repeatedly "
-            "because the workload still did not feel finished."
-        ),
-    ),
-    "pleasantness": DimPromptSource(
-        definition="Pleasantness refers to the extent to which the person experienced the event as pleasant.",
-        example_appraisal_state="The person felt that the event was very pleasant.",
-        example_event="The person receives news of acceptance into a preferred university.",
-        example_scenario_expansion="",
-        example_appraisal_expansion=(
-            "The person read the news as a clear positive outcome after a long wait, not as mixed or neutral."
-        ),
-    ),
-    "responsibility": DimPromptSource(
-        definition=(
-            "Responsibility refers to the extent to which the writer saw themselves as being responsible for "
-            "bringing about the situation or causing what happened."
-        ),
-        example_appraisal_state="The person felt that they were very responsible for the situation.",
-        example_event="The person accidentally sends a confidential email to the wrong recipient.",
-        example_scenario_expansion=(
-            "The person typed the wrong recipient address while sending the message, which routed the "
-            "confidential information to someone who was not supposed to receive it."
-        ),
-        example_appraisal_expansion=(
-            "The person saw the mistake as originating in a slip at the keyboard rather than as something "
-            "that happened without personal involvement."
-        ),
-    ),
-    "control": DimPromptSource(
-        definition=(
-            "Self-Control refers to the extent to which the writer found that he or she was able to influence "
-            "or manage what was happening in the situation."
-        ),
-        example_appraisal_state="The person felt that they were very much in control of the situation.",
-        example_event="A false rumor about the person starts spreading in class.",
-        example_scenario_expansion=(
-            "The person had complete message records on a phone showing how the rumor was fabricated "
-            "and who had started it."
-        ),
-        example_appraisal_expansion=(
-            "The person believed those records could be used to show the rumor was false and stop it "
-            "from spreading further."
-        ),
-    ),
-    "circumstance": DimPromptSource(
-        definition=(
-            "Circumstance refers to the extent to which the writer saw the event as determined by circumstances "
-            "that could not have been changed, prevented, or influenced by anyone."
-        ),
-        example_appraisal_state="The person felt that the event could not have been changed or influenced by anyone.",
-        example_event="The person’s home is badly damaged during an earthquake.",
-        example_scenario_expansion=(
-            "The earthquake struck suddenly without warning and caused severe damage to the house within seconds."
-        ),
-        example_appraisal_expansion=(
-            "The person experienced the damage as something no one present could have steered or prevented "
-            "in the moment."
-        ),
-    ),
-}
 
 
 def build_dim_static(dim_key: str) -> DimStatic:
@@ -603,9 +460,13 @@ def main():
                     "{DIMENSION_BLOCKS}", dim_blocks
                 )
 
-                raw = call_api_with_retry(client, messages=[{"role": "user", "content": prompt}])
                 expected_labels = dual_track_expected_output_labels(anchor_dims)
-                parsed = parse_dimension_outputs(raw, expected_labels)
+                parsed = call_and_parse_with_retry(
+                    client=client,
+                    prompt=prompt,
+                    expected_labels=expected_labels,
+                    step_name=f"{scenario_id} step1",
+                )
                 expansions.update(merge_dual_track_parsed(anchor_dims, parsed))
 
             # Step 2: softers (1/2) — same dual-track labels as Step 1
@@ -629,9 +490,13 @@ def main():
                     .replace("{DIMENSION_BLOCKS}", dim_blocks)
                 )
 
-                raw = call_api_with_retry(client, messages=[{"role": "user", "content": prompt}])
                 expected_labels = dual_track_expected_output_labels(softer_dims)
-                parsed = parse_dimension_outputs(raw, expected_labels)
+                parsed = call_and_parse_with_retry(
+                    client=client,
+                    prompt=prompt,
+                    expected_labels=expected_labels,
+                    step_name=f"{scenario_id} step2",
+                )
                 expansions.update(merge_dual_track_parsed(softer_dims, parsed))
 
             # Sanity: ensure we have all 7 expansions

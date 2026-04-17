@@ -40,10 +40,10 @@ elif [[ "$provider" == "openai" ]]; then
   fi
 elif [[ "$provider" == "qwen" ]]; then
   # Local vLLM (OpenAI-compatible) for Qwen models.
-  export QWEN_BASE_URL="${QWEN_BASE_URL:-http://127.0.0.1:8001/v1}"
+  export QWEN_BASE_URL="${QWEN_BASE_URL:-http://127.0.0.1:8004/v1}"
   export QWEN_API_KEY="${QWEN_API_KEY:-EMPTY}"
-  # IMPORTANT: must match /v1/models returned id, e.g. /data/models/Qwen3-4B
-  export QWEN_MODEL="${QWEN_MODEL:-/data/models/Qwen3-4B}"
+  # IMPORTANT: must match /v1/models returned id, e.g. /data/models/Qwen3-8B
+  export QWEN_MODEL="${QWEN_MODEL:-/data/models/Qwen3-8B}"
   vllm_endpoint="$QWEN_BASE_URL"
   eval_model="$QWEN_MODEL"
   export OPENAI_API_KEY="$QWEN_API_KEY"
@@ -54,8 +54,10 @@ fi
 
 eval_prompt="${EVAL_PROMPT:-task4/given_dialog_emotion_infer_appraisal}"
 question_dir="${QUESTION_DIR:-output/evaluation/task2_question}"
-tag="${eval_model//\//_}"
-output_dir="${OUTPUT_DIR:-output/evaluation/task4/${tag}}"
+model_leaf="${eval_model##*/}"
+output_dir="${OUTPUT_DIR:-output/evaluation/task4/${model_leaf}}"
+TASK4_OFFSET="${TASK4_OFFSET:-0}"
+TASK4_APPEND="${TASK4_APPEND:-1}"
 mkdir -p "$output_dir"
 
 shopt -s nullglob
@@ -67,6 +69,16 @@ fi
 
 echo "provider=$provider model=$eval_model endpoint=$vllm_endpoint" >&2
 echo "questions=$question_dir -> $output_dir" >&2
+[[ "$TASK4_OFFSET" != "0" ]] && echo "TASK4_OFFSET=$TASK4_OFFSET (resume per dimension file)" >&2
+[[ "$TASK4_APPEND" == "1" ]] && echo "TASK4_APPEND=1 (appending)" >&2
+
+extra_py=()
+if [[ "$TASK4_APPEND" != "1" && "$TASK4_OFFSET" != "0" ]]; then
+  extra_py+=(--offset "$TASK4_OFFSET")
+fi
+if [[ "$TASK4_APPEND" == "1" ]]; then
+  extra_py+=(--append)
+fi
 
 for abs in "${jsonl_paths[@]}"; do
   base="$(basename "$abs")"
@@ -77,12 +89,27 @@ for abs in "${jsonl_paths[@]}"; do
   rel="${abs#$ROOT/}"
   out_file="${output_dir}/${stem}.jsonl"
   echo "  $rel -> $out_file" >&2
+  run_py=("${extra_py[@]}")
+  if [[ "$TASK4_APPEND" == "1" ]]; then
+    current_lines=0
+    if [[ -f "$out_file" ]]; then
+      current_lines=$(wc -l < "$out_file")
+    fi
+    resume_offset="$current_lines"
+    if [[ "$TASK4_OFFSET" =~ ^[0-9]+$ ]] && (( TASK4_OFFSET > current_lines )); then
+      # Optional floor: if TASK4_OFFSET is set larger than existing lines, honor it.
+      resume_offset="$TASK4_OFFSET"
+    fi
+    run_py+=(--offset "$resume_offset")
+    echo "    resume_offset=$resume_offset (auto from existing output lines)" >&2
+  fi
   python3 evaluator/run_task4_appraisal_mcqa_eval.py \
     --vllm_endpoint "$vllm_endpoint" \
     --eval_model "$eval_model" \
     --eval_prompt "$eval_prompt" \
     --question_file "$rel" \
-    --output_file "${out_file#$ROOT/}"
+    --output_file "${out_file#$ROOT/}" \
+    "${run_py[@]}"
 done
 
 echo "Done under $output_dir" >&2

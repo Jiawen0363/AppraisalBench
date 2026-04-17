@@ -1,0 +1,51 @@
+Loaded 998 dialogs (offset=0, limit=None), 1000 scenarios -> /home/jiawen/AppraisalBench/output/evaluation/task3_ablation/gpt-4o_attention.jsonl (write), appraisal=attention
+  batch 1/998 (dialog order ~#1)
+  batch 20/998 (dialog order ~#20)
+  batch 40/998 (dialog order ~#40)
+  batch 60/998 (dialog order ~#60)
+  batch 80/998 (dialog order ~#80)
+  batch 100/998 (dialog order ~#100)
+  batch 120/998 (dialog order ~#120)
+  batch 140/998 (dialog order ~#140)
+  batch 160/998 (dialog order ~#160)
+  batch 180/998 (dialog order ~#180)
+  batch 200/998 (dialog order ~#200)
+  batch 220/998 (dialog order ~#220)
+  batch 240/998 (dialog order ~#240)
+  batch 260/998 (dialog order ~#260)
+  batch 280/998 (dialog order ~#280)
+  batch 300/998 (dialog order ~#300)
+  batch 320/998 (dialog order ~#320)
+  batch 340/998 (dialog order ~#340)
+  batch 360/998 (dialog order ~#360)
+  batch 380/998 (dialog order ~#380)
+  batch 400/998 (dialog order ~#400)
+  batch 420/998 (dialog order ~#420)
+  batch 440/998 (dialog order ~#440)
+  batch 460/998 (dialog order ~#460)
+  batch 480/998 (dialog order ~#480)
+  batch 500/998 (dialog order ~#500)
+  batch 520/998 (dialog order ~#520)
+  batch 540/998 (dialog order ~#540)
+  batch 560/998 (dialog order ~#560)
+  batch 580/998 (dialog order ~#580)
+  batch 600/998 (dialog order ~#600)
+  batch 620/998 (dialog order ~#620)
+  batch 640/998 (dialog order ~#640)
+  batch 660/998 (dialog order ~#660)
+Traceback (most recent call last):
+  File "/home/jiawen/AppraisalBench/evaluator/run_task3_dialog_emotion_eval.py", line 271, in <module>
+    main()
+  File "/home/jiawen/AppraisalBench/evaluator/run_task3_dialog_emotion_eval.py", line 225, in main
+    raw = call_evaluator(
+  File "/home/jiawen/AppraisalBench/evaluator/model_utils.py", line 61, in call_evaluator
+    resp = client.chat.completions.create(**create_kwargs, **kwargs)
+  File "/home/jiawen/miniconda3/envs/appbench/lib/python3.10/site-packages/openai/_utils/_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "/home/jiawen/miniconda3/envs/appbench/lib/python3.10/site-packages/openai/resources/chat/completions/completions.py", line 1204, in create
+    return self._post(
+  File "/home/jiawen/miniconda3/envs/appbench/lib/python3.10/site-packages/openai/_base_client.py", line 1297, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/home/jiawen/miniconda3/envs/appbench/lib/python3.10/site-packages/openai/_base_client.py", line 1070, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "The response was filtered due to the prompt triggering Azure OpenAI's content management policy. Please modify your prompt and retry. To learn more about our content filtering policies please read our documentation: https://***.com/***?linkid=***", 'type': 'upstream_error', 'param': 'prompt', 'code': 'content_filter'}}

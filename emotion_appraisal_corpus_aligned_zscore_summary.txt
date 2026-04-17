@@ -1,0 +1,65 @@
+Total samples: 1001
+Changed labels: 412 (41.16%)
+
+Old label counts:
+  Anger: 143
+  Disgust: 143
+  Fear: 143
+  Guilt: 143
+  Joy: 143
+  Sadness: 143
+  Shame: 143
+
+New label counts:
+  Anger: 193
+  Disgust: 100
+  Fear: 206
+  Guilt: 188
+  Joy: 157
+  Sadness: 103
+  Shame: 54
+
+Top label transitions (old -> new):
+  Joy -> Joy: 143
+  Fear -> Fear: 114
+  Anger -> Anger: 106
+  Guilt -> Guilt: 95
+  Shame -> Guilt: 77
+  Sadness -> Sadness: 60
+  Disgust -> Disgust: 55
+  Sadness -> Fear: 52
+  Disgust -> Anger: 47
+  Guilt -> Shame: 23
+  Disgust -> Sadness: 21
+  Shame -> Disgust: 21
+  Sadness -> Anger: 20
+  Shame -> Shame: 16
+  Anger -> Fear: 14
+  Fear -> Shame: 13
+  Shame -> Anger: 10
+  Guilt -> Fear: 10
+  Anger -> Disgust: 10
+  Disgust -> Guilt: 9
+
+Shame/Guilt-related transitions:
+  Guilt -> Guilt: 95
+  Shame -> Guilt: 77
+  Guilt -> Shame: 23
+  Shame -> Disgust: 21
+  Shame -> Shame: 16
+  Fear -> Shame: 13
+  Shame -> Anger: 10
+  Guilt -> Fear: 10
+  Disgust -> Guilt: 9
+  Shame -> Sadness: 9
+  Shame -> Fear: 9
+  Guilt -> Sadness: 6
+  Guilt -> Disgust: 5
+  Anger -> Guilt: 4
+  Guilt -> Joy: 2
+  Guilt -> Anger: 2
+  Sadness -> Guilt: 2
+  Shame -> Joy: 1
+  Fear -> Guilt: 1
+  Anger -> Shame: 1
+  Disgust -> Shame: 1

@@ -35,10 +35,10 @@ elif [[ "$provider" == "openai" ]]; then
   fi
 elif [[ "$provider" == "qwen" ]]; then
   # Local vLLM (OpenAI-compatible) for Qwen models.
-  export QWEN_BASE_URL="${QWEN_BASE_URL:-http://127.0.0.1:8002/v1}"
+  export QWEN_BASE_URL="${QWEN_BASE_URL:-http://127.0.0.1:8001/v1}"
   export QWEN_API_KEY="${QWEN_API_KEY:-EMPTY}"
-  # IMPORTANT: must match /v1/models returned id.
-  export QWEN_MODEL="${QWEN_MODEL:-/data/models/Qwen3-4B}"
+  # IMPORTANT: must match /v1/models returned id, e.g. /data/models/Qwen3-8B
+  export QWEN_MODEL="${QWEN_MODEL:-/data/models/Qwen3-8B}"
   vllm_endpoint="$QWEN_BASE_URL"
   eval_model="$QWEN_MODEL"
   export OPENAI_API_KEY="$QWEN_API_KEY"
@@ -50,11 +50,37 @@ fi
 eval_prompt="${EVAL_PROMPT:-task1/eval_emotion_base}"
 dialog_file="${DIALOG_FILE:-output/dialog/gpt4o/dialog_advanced.jsonl}"
 scenarios_file="${SCENARIOS_FILE:-output/seed2scenario/scenarios.jsonl}"
-tag="${eval_model//\//_}"
-output_file="${OUTPUT_FILE:-output/evaluation/task1/${tag}.jsonl}"
+model_leaf="${eval_model##*/}"
+output_file="${OUTPUT_FILE:-output/evaluation/task1/${model_leaf}.jsonl}"
+# Resume support:
+# - TASK1_OFFSET: skip first N dialog rows (0-based)
+# - TASK1_APPEND=1: append to output_file instead of overwrite
+TASK1_OFFSET="${TASK1_OFFSET:-0}"
+TASK1_APPEND="${TASK1_APPEND:-1}"
 mkdir -p "$(dirname "$output_file")"
 
 echo "provider=$provider model=$eval_model endpoint=$vllm_endpoint -> $output_file" >&2
+[[ "$TASK1_OFFSET" != "0" ]] && echo "TASK1_OFFSET=$TASK1_OFFSET (resume)" >&2
+[[ "$TASK1_APPEND" == "1" ]] && echo "TASK1_APPEND=1 (appending)" >&2
+
+extra_py=()
+if [[ "$TASK1_APPEND" != "1" && "$TASK1_OFFSET" != "0" ]]; then
+  extra_py+=(--offset "$TASK1_OFFSET")
+fi
+if [[ "$TASK1_APPEND" == "1" ]]; then
+  extra_py+=(--append)
+  current_lines=0
+  if [[ -f "$output_file" ]]; then
+    current_lines=$(wc -l < "$output_file")
+  fi
+  resume_offset="$current_lines"
+  if [[ "$TASK1_OFFSET" =~ ^[0-9]+$ ]] && (( TASK1_OFFSET > current_lines )); then
+    # Optional floor: if TASK1_OFFSET is set larger than existing lines, honor it.
+    resume_offset="$TASK1_OFFSET"
+  fi
+  extra_py+=(--offset "$resume_offset")
+  echo "TASK1_AUTO_OFFSET=$resume_offset (from existing output lines)" >&2
+fi
 
 python3 evaluator/run_task1_dialog_emotion_eval.py \
   --vllm_endpoint "$vllm_endpoint" \
@@ -62,6 +88,7 @@ python3 evaluator/run_task1_dialog_emotion_eval.py \
   --eval_prompt "$eval_prompt" \
   --dialog_file "$dialog_file" \
   --scenarios_file "$scenarios_file" \
-  --output_file "$output_file"
+  --output_file "$output_file" \
+  "${extra_py[@]}"
 
 echo "Done: $output_file" >&2

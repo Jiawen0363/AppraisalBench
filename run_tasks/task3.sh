@@ -37,7 +37,7 @@ elif [[ "$provider" == "openai" ]]; then
 elif [[ "$provider" == "qwen" ]]; then
   # Local vLLM (OpenAI-compatible) for Qwen models.
   vllm_endpoint="${QWEN_BASE_URL:-http://127.0.0.1:8003/v1}"
-  eval_model="${QWEN_MODEL:-/data/models/Qwen3-4B}"
+  eval_model="${QWEN_MODEL:-/data/models/Qwen3-8B}"
   export OPENAI_API_KEY="${QWEN_API_KEY:-EMPTY}"
 else
   echo "Unknown provider: $provider (use openai|deepseek|qwen)" >&2
@@ -47,12 +47,12 @@ fi
 eval_prompt="${EVAL_PROMPT:-task3/eval_emotion_dialog_plus_appraisal}"
 dialog_file="${DIALOG_FILE:-output/dialog/gpt4o/dialog_advanced.jsonl}"
 scenarios_file="${SCENARIOS_FILE:-output/seed2scenario/scenarios.jsonl}"
-tag="${eval_model//\//_}"
-output_file="${OUTPUT_FILE:-output/evaluation/task3/${tag}.jsonl}"
+model_leaf="${eval_model##*/}"
+output_file="${OUTPUT_FILE:-output/evaluation/task3/${model_leaf}.jsonl}"
 # Resume: skip first N dialogs (0-based). E.g. TASK3_OFFSET=10 starts at the 11th dialog line.
 TASK3_OFFSET="${TASK3_OFFSET:-0}"
 # Set TASK3_APPEND=1 to append to output_file instead of truncating.
-TASK3_APPEND="${TASK3_APPEND:-0}"
+TASK3_APPEND="${TASK3_APPEND:-1}"
 mkdir -p "$(dirname "$output_file")"
 
 echo "provider=$provider model=$eval_model endpoint=$vllm_endpoint -> $output_file" >&2
@@ -60,11 +60,22 @@ echo "provider=$provider model=$eval_model endpoint=$vllm_endpoint -> $output_fi
 [[ "$TASK3_APPEND" == "1" ]] && echo "TASK3_APPEND=1 (appending)" >&2
 
 extra_py=()
-if [[ "$TASK3_OFFSET" != "0" ]]; then
+if [[ "$TASK3_APPEND" != "1" && "$TASK3_OFFSET" != "0" ]]; then
   extra_py+=(--offset "$TASK3_OFFSET")
 fi
 if [[ "$TASK3_APPEND" == "1" ]]; then
   extra_py+=(--append)
+  current_lines=0
+  if [[ -f "$output_file" ]]; then
+    current_lines=$(wc -l < "$output_file")
+  fi
+  resume_offset="$current_lines"
+  if [[ "$TASK3_OFFSET" =~ ^[0-9]+$ ]] && (( TASK3_OFFSET > current_lines )); then
+    # Optional floor: if TASK3_OFFSET is set larger than existing lines, honor it.
+    resume_offset="$TASK3_OFFSET"
+  fi
+  extra_py+=(--offset "$resume_offset")
+  echo "TASK3_AUTO_OFFSET=$resume_offset (from existing output lines)" >&2
 fi
 if [[ -n "${TASK3_ONLY_APPRAISAL_DIM:-}" ]]; then
   extra_py+=(--only_appraisal_dim "$TASK3_ONLY_APPRAISAL_DIM")

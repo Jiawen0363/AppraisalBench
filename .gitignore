@@ -26,3 +26,6 @@ run_tasks/.env
 
 # Local scratch / large data (do not push)
 4702/
+
+# Local pip / zipapp bundle (do not push)
+.python_packages/

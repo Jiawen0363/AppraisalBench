@@ -1,0 +1,23 @@
+Read the following conversation. Roles: Experiencer (the person in the situation); Responder (the conversational agent).
+
+Experiencer: My 2-year-old broke her leg, and we felt helpless to assist her. I keep replaying everything in my head, wondering if there’s something I missed or could have done differently, but it all happened so fast.
+Responder: That sounds so hard—watching something like that happen and feeling helpless must have been overwhelming. It makes sense you'd keep replaying it in your mind.
+Experiencer: It’s like every decision feels so heavy now—trying to figure out the best care, the right steps, and still feeling unsure if I’m doing enough.
+Responder: That sounds exhausting, having all those heavy decisions weighing on you. It’s a lot to carry, especially when you’re still unsure.
+Experiencer: I just keep second-guessing everything—like, what if I’m overlooking something important or not asking the right questions? It’s hard to feel confident about anything right now.
+Responder: I hear you—it’s tough to feel confident when you’re second-guessing everything like that. It sounds like there’s so much on your mind.
+
+The emotion label below is given for this item; use it when judging appraisals.
+
+The Experiencer is feeling Fear towards the event.
+
+The question and all options refer to the Experiencer's appraisal of their situation - the subjective meaning the Experiencer gives to what happened. Do not choose answers that describe the Responder's stance or feelings.
+
+Question: Which interpretation best reflects how much further attention the Experiencer wants to give to what happened?
+
+A. The person briefly focused on the doctor's explanation but did not spend much time revisiting the details afterward.
+B. The person wanted to focus enough to understand the treatment options but did not feel compelled to revisit every detail of the situation.
+C. The person felt overwhelmed by the conflicting advice from specialists and wished to step away from further deliberation about the treatment options.
+D. The person felt magnetically drawn to the unfolding situation, unable to detach until they fully understood every aspect of their child's condition and care.
+
+Answer with only A or B or C or D.

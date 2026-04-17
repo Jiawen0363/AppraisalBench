@@ -70,6 +70,28 @@ def load_scenarios_emotion_and_appraisals(path: str | Path) -> dict[str, tuple[s
     return out
 
 
+def load_existing_sample_ids(path: str | Path) -> set[str]:
+    """Read existing output jsonl and collect sample_id for resume skipping."""
+    path = Path(path)
+    done: set[str] = set()
+    if not path.exists():
+        return done
+    with path.open(encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            sample_id = row.get("sample_id")
+            if sample_id is None:
+                continue
+            done.add(str(sample_id))
+    return done
+
+
 def format_appraisal_expansion_block(
     appraisals: dict,
     only_keys: tuple[str, ...] | None = None,
@@ -197,6 +219,10 @@ def main():
     if args.limit is not None:
         dialogs = dialogs[: args.limit]
 
+    existing_ids: set[str] = set()
+    if args.append:
+        existing_ids = load_existing_sample_ids(output_path)
+
     n = len(dialogs)
     mode = "append" if args.append else "write"
     ablation = args.only_appraisal_dim or "all_dims"
@@ -205,11 +231,18 @@ def main():
         f"{len(gold_by_id)} scenarios -> {output_path} ({mode}), appraisal={ablation}",
         flush=True,
     )
+    if existing_ids:
+        print(
+            f"Resume mode: found {len(existing_ids)} existing sample_ids, will skip duplicates.",
+            flush=True,
+        )
 
     out_mode = "a" if args.append else "w"
     with output_path.open(out_mode, encoding="utf-8", buffering=1) as f:
         for i, record in enumerate(dialogs):
             sample_id = str(record.get("scenario_id", record.get("corpus_id", str(i))))
+            if sample_id in existing_ids:
+                continue
             row = gold_by_id.get(sample_id)
             if row is None:
                 print(f"[warn] no scenario for sample_id={sample_id}, skipping", flush=True)
@@ -254,6 +287,7 @@ def main():
             }
             f.write(json.dumps(out, ensure_ascii=False) + "\n")
             f.flush()
+            existing_ids.add(sample_id)
 
             if args.verbose:
                 print(

@@ -1,0 +1,37 @@
+You are generating one distractor appraisal interpretation for a QA dataset.
+
+You will be given:
+- a scenario narrative,
+- one appraisal dimension definition,
+- one worked example for that dimension (with paired example scenario and example appraisal interpretation),
+- a target appraisal state (the distractor state to express).
+
+Task:
+Write exactly one sentence for the distractor appraisal interpretation.
+
+Requirements:
+1) Keep it consistent with the given scenario. Do not invent a new main event.
+2) Express the target appraisal state clearly for this dimension.
+3) Stay in third person and use "the person" for the focal individual.
+4) Ground the interpretation in concrete scenario details (at least one specific factual cue from the scenario).
+5) Keep style concise and natural (one sentence).
+6) Do not output labels, JSON, bullets, or explanation.
+
+Input:
+Scenario:
+{SCENARIO}
+
+Dimension:
+{DIMENSION}
+
+Definition:
+{DEFINITION}
+
+Worked example:
+{EXAMPLE}
+
+Target appraisal state:
+{TARGET_STATE}
+
+Output:
+One sentence only (the distractor appraisal interpretation).

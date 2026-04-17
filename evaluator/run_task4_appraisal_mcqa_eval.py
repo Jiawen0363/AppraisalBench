@@ -84,6 +84,8 @@ def parse_args():
     )
     p.add_argument("--output_file", type=str, required=True)
     p.add_argument("--limit", type=int, default=None)
+    p.add_argument("--offset", type=int, default=0, help="Skip first N question rows.")
+    p.add_argument("--append", action="store_true", help="Append to output file instead of overwrite.")
     p.add_argument("--verbose", action="store_true")
     return p.parse_args()
 
@@ -115,6 +117,11 @@ def main():
             if not line:
                 continue
             rows.append(json.loads(line))
+    start_idx = max(0, args.offset)
+    if start_idx >= len(rows):
+        print(f"Offset out of range: offset={start_idx}, total={len(rows)}", flush=True)
+        return
+    rows = rows[start_idx:]
     if args.limit is not None:
         rows = rows[: args.limit]
 
@@ -122,8 +129,9 @@ def main():
     print(f"Loaded {n} questions from {question_path} -> {output_path}", flush=True)
     print(f"API base_url={base_url}", flush=True)
 
-    with output_path.open("w", encoding="utf-8", buffering=1) as out_f:
-        for i, row in enumerate(rows):
+    write_mode = "a" if args.append else "w"
+    with output_path.open(write_mode, encoding="utf-8", buffering=1) as out_f:
+        for i, row in enumerate(rows, start=start_idx):
             gold = str(row.get("correct_option", "")).strip().upper()[:1]
             if gold not in "ABCD":
                 print(f"[warn] bad correct_option for row {i}, skipping", flush=True)
@@ -176,7 +184,7 @@ def main():
                     f"[{row.get('scenario_id')}] raw={raw!r} -> pred={pred} gold={gold} ok={ok}",
                     flush=True,
                 )
-            if (i + 1) % 20 == 0 or i == 0:
+            if (i + 1) % 20 == 0 or i == start_idx:
                 print(f"  {i + 1}/{n}", flush=True)
 
     print("Done.", flush=True)

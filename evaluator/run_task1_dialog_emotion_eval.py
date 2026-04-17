@@ -103,6 +103,8 @@ def parse_args():
     )
     p.add_argument("--output_file", type=str, required=True)
     p.add_argument("--limit", type=int, default=None)
+    p.add_argument("--offset", type=int, default=0, help="Skip first N dialog rows.")
+    p.add_argument("--append", action="store_true", help="Append to output file instead of overwrite.")
     p.add_argument("--verbose", action="store_true")
     return p.parse_args()
 
@@ -119,6 +121,11 @@ def main():
     prompt_template = prompt_path.read_text(encoding="utf-8")
     dialogs = load_dialogs_jsonl(dialog_path)
     gold_by_id = load_scenarios_emotions(scenarios_path)
+    start_idx = max(0, args.offset)
+    if start_idx >= len(dialogs):
+        print(f"Offset out of range: offset={start_idx}, total={len(dialogs)}", flush=True)
+        return
+    dialogs = dialogs[start_idx:]
     if args.limit is not None:
         dialogs = dialogs[: args.limit]
 
@@ -126,8 +133,9 @@ def main():
     print(f"Loaded {n} dialogs, {len(gold_by_id)} scenarios -> {output_path}", flush=True)
 
     # Line-buffered + flush each row so output file is visible while the run is in progress.
-    with output_path.open("w", encoding="utf-8", buffering=1) as f:
-        for i, record in enumerate(dialogs):
+    write_mode = "a" if args.append else "w"
+    with output_path.open(write_mode, encoding="utf-8", buffering=1) as f:
+        for i, record in enumerate(dialogs, start=start_idx):
             sample_id = str(record.get("scenario_id", record.get("corpus_id", str(i))))
             golden = gold_by_id.get(sample_id)
             if golden is None:
@@ -169,7 +177,7 @@ def main():
 
             if args.verbose:
                 print(f"[{sample_id}] raw={raw!r} -> pred={display_pred} gold={golden} ok={pred_ok}", flush=True)
-            if (i + 1) % 20 == 0 or i == 0:
+            if ((i + 1) % 20 == 0) or (i == start_idx):
                 print(f"  {i + 1}/{n}", flush=True)
 
     print("Done.", flush=True)

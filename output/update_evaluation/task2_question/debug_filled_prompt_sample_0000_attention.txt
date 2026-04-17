@@ -1,0 +1,38 @@
+You are generating one distractor appraisal interpretation for a QA dataset.
+
+You will be given:
+- a scenario narrative,
+- one appraisal dimension definition,
+- one worked example for that dimension (with paired example scenario and example appraisal interpretation),
+- a target appraisal state (the distractor state to express).
+
+Task:
+Write exactly one sentence for the distractor appraisal interpretation.
+
+Requirements:
+1) Keep it consistent with the given scenario. Do not invent a new main event.
+2) Express the target appraisal state clearly for this dimension.
+3) Stay in third person and use "the person" for the focal individual.
+4) Keep style concise and natural (one sentence).
+5) Do not output labels, JSON, bullets, or explanation.
+
+Input:
+Scenario:
+The person’s 2-year-old child broke her leg after falling from a playground slide, where other children were running around, making it difficult to keep consistent watch. The crowded playground and sudden nature of the fall made it hard for anyone to react effectively in the moment. Afterward, the child was taken to a doctor, who explained the X-ray results and outlined a treatment plan. The person asked detailed questions during the discussion, focusing closely on the information provided, though the options and potential outcomes were initially confusing. The person spent hours researching treatment possibilities, consulting various specialists to better understand the available choices. During the consultations, the person struggled to assert their preferences while processing advice from multiple experts.
+
+Dimension:
+Attention
+
+Definition:
+Attention refers to the extent to which the person wanted to continue attending to the event, focusing on it, or mentally staying engaged.
+
+Worked example:
+Example appraisal state: The person strongly wanted to devote further attention to the event.
+Example scenario: The person kept checking hospital updates and revisiting the details shared by the medical team after a child's injury.
+Example appraisal interpretation: The person was unable to disengage and repeatedly returned to the situation until every part of it felt mentally accounted for.
+
+Target appraisal state:
+The person wanted to devote a little attention to the event.
+
+Output:
+One sentence only (the distractor appraisal interpretation).

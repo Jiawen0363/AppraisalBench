@@ -1,0 +1,17 @@
+In cognitive appraisal theory, appraisals are how the person evaluates what the event means for them.
+
+Seed event (what happened):
+
+{Seed_event}
+
+Below are seven lines (A–G). Each is a candidate appraisal of that event from an angle common in cognitive appraisal work. Using appraisal theory, pick the line that best captures the Experiencer's appraisal along {Appraisal_dimension_display}.
+
+A. {option A}
+B. {option B}
+C. {option C}
+D. {option D}
+E. {option E}
+F. {option F}
+G. {option G}
+
+Answer with only A or B or C or D or E or F or G.
